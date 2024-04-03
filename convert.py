@@ -26,7 +26,6 @@ hdf5_files = [
 output_csv_paths = [ 
     '081d0LMT.csv',
     '131j1LMT.csv',
-    # Add more output paths corresponding to the input file paths
 ]
 
 for hdf5_file, output_csv_path in zip(hdf5_files, output_csv_paths):
