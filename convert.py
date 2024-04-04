@@ -24,8 +24,8 @@ hdf5_files = [
 ]
 
 output_csv_paths = [ 
-    '081d0LMT.csv',
-    '131j1LMT.csv',
+    '081.csv',
+    '131.csv',
 ]
 
 for hdf5_file, output_csv_path in zip(hdf5_files, output_csv_paths):
