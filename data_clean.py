@@ -2,14 +2,18 @@ import pandas as pd
 
 def clean_cols(input_csv, ref_cols):
     df = pd.read_csv(input_csv)
+    cleaned = df.copy()
+    cleaned.columns = cleaned.columns.str.strip("b'")  # Remove 'b' from column names
 
-    # Remove columns based on reference column names or substrings
-    dropp = [col for col in df.columns if any(sub in col for sub in ref_cols)]
-    cleaned = df.drop(columns=dropp)
-    
+    # Extract channel names and remove columns accordingly
+    cleaned_columns = cleaned.columns.tolist()
+
+    dropp = [col for col in cleaned_columns if col.split()[-1][0] in ['G', 'F', 'I']]
+    dropp += [col for col in cleaned_columns if any(ref in col for ref in ref_cols)]
+
+    cleaned.drop(columns=dropp, inplace=True)
+
     cleaned.rename(columns={"Unnamed: 0": "Timestamp"}, inplace=True)
-    cleaned.columns = cleaned.columns.str.replace("b'", "").str.replace("'", "")
-
     cleaned.to_csv(input_csv.replace("_t.csv", "_clean.csv"), index=False,float_format='%.8f')
 
 
